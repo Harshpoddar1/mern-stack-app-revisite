@@ -1,0 +1,29 @@
+name: MERN stack app revisite ci/cd
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  dependency-audit:
+
+    runs-on: ubuntu-26.04
+
+    steps:
+      - name: Code checkout to runner
+        uses: actions/checkout@v5
+      - name: Node checkout
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Backend package install
+        run:  npm ci
+      - name: Backend audit
+        run:  npm audit --omit=dev --audit-level=high
+      - name: Client package install
+        working-directory: client
+        run:  npm ci --legacy-peer-deps
+      - name: Client audit
+        working-directory: client
+        run:  npm audit --omit=dev --audit-level=high
