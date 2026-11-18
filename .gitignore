@@ -25,4 +25,4 @@ yarn-error.log*
 client/.eslintcache
 .terraform/
 terraform.tfstate*
-
+node_modules
