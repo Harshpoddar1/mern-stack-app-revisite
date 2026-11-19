@@ -81,6 +81,7 @@ jobs:
           script_stop: true
           script: |
             if [! -d mern-stack-app-revisite];
+              git clone https://github.com/Harshpoddar1/mern-stack-app-revisite.git
             fi
             cd mern-stack-app-revisite
             git pull origin main
