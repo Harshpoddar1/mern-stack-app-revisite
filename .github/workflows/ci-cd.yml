@@ -30,6 +30,7 @@ jobs:
         run:  npm audit --omit=dev --audit-level=high
 
   build-and-trivy-scan:
+    needs: dependency-audit
     runs-on: ubuntu-26.04
 
     steps:
