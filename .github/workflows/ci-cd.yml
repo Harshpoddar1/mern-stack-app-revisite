@@ -66,3 +66,25 @@ jobs:
           severity:  'CRITICAL,HIGH'
           ignore-unfixed: true
           exit-code: '1'
+
+  deploy:
+    needs: build-and-trivy-scan
+    runs-on: ubuntu-26.04
+
+    steps:
+      - name: Deploy to server via ssh
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          key:  ${{ secrets.EC2_SSH_KEY }}
+          user: ${{ secrets.EC2_USER }}
+          script_stop: true
+          script: |
+            if [! -d mern-stack-app-revisite];
+            fi
+            cd mern-stack-app-revisite
+            git pull origin main
+            cat > .env << EOF
+            MONGO_URI=${{ secrets.MONGO_URI }}
+            EOF
+            docker compose up --build -d
