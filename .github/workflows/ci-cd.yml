@@ -77,10 +77,10 @@ jobs:
         with:
           host: ${{ secrets.EC2_HOST }}
           key:  ${{ secrets.EC2_SSH_KEY }}
-          user: ${{ secrets.EC2_USER }}
+          username: ${{ secrets.EC2_USER }}
           script_stop: true
           script: |
-            if [! -d mern-stack-app-revisite];
+            if [ ! -d mern-stack-app-revisite ]; then
               git clone https://github.com/Harshpoddar1/mern-stack-app-revisite.git
             fi
             cd mern-stack-app-revisite
